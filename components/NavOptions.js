@@ -11,6 +11,7 @@ import uberX from "../assets/UberX.png";
 import eats from "../assets/eats.png";
 import tw from "tailwind-react-native-classnames";
 import {Icon} from 'react-native-elements'
+import { useNavigation } from "@react-navigation/native";
 
 const data = [
   {
@@ -25,18 +26,23 @@ const data = [
     title: "Get Food",
     image:
       "https://d4p17acsd5wyj.cloudfront.net/shortcuts/cuisines/healthy.png",
-    screen: "EatsScreen",
+    screen: "EatScreen",
   },
 ];
 
 const NavOptions = () => {
+
+    const navigation = useNavigation()
   return (
     <FlatList
       horizontal
       data={data}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <TouchableOpacity style={tw`p-2 pl-6 pb-8 pt-4 bg-gray-200 m-2 w-40`}>
+        <TouchableOpacity 
+        onPress={() => navigation.navigate(item.screen)}
+        
+        style={tw`p-2 pl-6 pb-8 pt-4 bg-gray-200 m-2 w-40`}>
           <View>
             <Image
               style={{ width: 120, height: 120, resizeMode: "contain" }}

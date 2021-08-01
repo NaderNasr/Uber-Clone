@@ -17,18 +17,7 @@ const data = [
         location: 'Work',
         destination: 'Financial District, Toronto, ON',
     },
-    {
-        id: '3',
-        icon: 'work',
-        location: 'Work',
-        destination: 'Financial District, Toronto, ON',
-    },
-    {
-        id: '4',
-        icon: 'work',
-        location: 'Work',
-        destination: 'Financial District, Toronto, ON',
-    },
+    
     
     
 ]

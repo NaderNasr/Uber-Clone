@@ -20,7 +20,7 @@ const data = [
     id: "123",
     title: "Get a ride",
     image:
-      "https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,w_485,h_385/f_auto,q_auto/products/carousel/UberX.png",
+      "https://bit.ly/3C3OL0B",
     screen: "MapScreen",
   },
   {

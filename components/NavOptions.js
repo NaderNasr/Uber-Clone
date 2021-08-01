@@ -7,8 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import uberX from "../assets/UberX.png";
-import eats from "../assets/eats.png";
 import tw from "tailwind-react-native-classnames";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
@@ -19,8 +17,7 @@ const data = [
   {
     id: "123",
     title: "Get a ride",
-    image:
-      "https://bit.ly/3C3OL0B",
+    image: "https://bit.ly/3C3OL0B",
     screen: "MapScreen",
   },
   {
@@ -34,7 +31,7 @@ const data = [
 
 const NavOptions = () => {
   const navigation = useNavigation();
-  const origin = useSelector(selectOrigin)
+  const origin = useSelector(selectOrigin);
   return (
     <FlatList
       horizontal

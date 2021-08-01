@@ -1,32 +1,44 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import tw from "tailwind-react-native-classnames";
-import { selectDestination, selectOrigin } from "../slices/navSlice";
+import { selectDestination, selectOrigin, setTimeInformation } from "../slices/navSlice";
 import MapViewDirections from "react-native-maps-directions";
-import {GOOGLE_MAPS_KEY} from '@env'
+import { GOOGLE_MAPS_KEY } from "@env";
 import { useRef } from "react";
 
-
-
 const Map = () => {
-
   const origin = useSelector(selectOrigin);
   const destination = useSelector(selectDestination);
-  const mapRef = useRef(null)
+  const mapRef = useRef(null);
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    if(!origin || !destination) return
+    if (!origin || !destination) return;
     //zoom
-    mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
-        edgePadding: {top: 50, right: 50, bottom: 50, left: 50}
-    })
-  }, [origin, destination])
+    mapRef.current.fitToSuppliedMarkers(["origin", "destination"], {
+      edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+    });
+  }, [origin, destination]);
+
+  useEffect(() => {
+    if (!origin || !destination) return;
+    const getTravelTime = async () => {
+      fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.description}&destinations=${destination.description}&key=${GOOGLE_MAPS_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+       console.log(data)
+        
+        dispatch(setTimeInformation(data.rows[0].elements[0]))
+      })
+    };
+    getTravelTime();
+  }, [origin, destination, GOOGLE_MAPS_KEY]);
 
   return (
     <MapView
-    ref={mapRef}
+      ref={mapRef}
       style={tw`flex-1`}
       mapType="mutedStandard"
       initialRegion={{
@@ -36,14 +48,16 @@ const Map = () => {
         longitudeDelta: 0.005,
       }}
     >
-      {origin && destination && (<MapViewDirections 
+      {origin && destination && (
+        <MapViewDirections
           origin={origin.description}
           destination={destination.description}
           apikey={GOOGLE_MAPS_KEY}
           strokeWidth={3}
           strokeColor="black"
           lineDashPattern={[1]}
-      />)}
+        />
+      )}
       {origin?.location && (
         <Marker
           coordinate={{
@@ -72,5 +86,3 @@ const Map = () => {
 };
 
 export default Map;
-
-const styles = StyleSheet.create({});
